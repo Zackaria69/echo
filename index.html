@@ -1,0 +1,821 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Oceanic Profile</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #00e5ff;
+            --primary-dark: #0099cc;
+            --primary-light: #80f0ff;
+            --secondary: #00b4d8;
+            --bg-dark: #001219;
+            --bg-darker: #000814;
+            --bg-light: rgba(0, 180, 216, 0.1);
+            --glass: rgba(173, 216, 230, 0.15);
+            --text: #e0f2fe;
+            --text-light: #ffffff;
+            --neon-glow: 0 0 10px var(--primary), 0 0 20px var(--primary), 0 0 30px rgba(0, 229, 255, 0.3);
+            --wave-height: 100px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(to bottom, var(--bg-darker), var(--bg-dark));
+            color: var(--text);
+            overflow-x: hidden;
+            position: relative;
+            min-height: 100vh;
+        }
+
+        /* Underwater bubble background */
+        .bubbles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .bubble {
+            position: absolute;
+            bottom: -100px;
+            background: rgba(0, 229, 255, 0.2);
+            border-radius: 50%;
+            animation: rise linear infinite;
+            filter: blur(1px);
+        }
+
+        @keyframes rise {
+            0% {
+                bottom: -100px;
+                transform: translateX(0);
+            }
+            50% {
+                transform: translateX(100px);
+            }
+            100% {
+                bottom: 100vh;
+                transform: translateX(-100px);
+            }
+        }
+
+        /* Ocean wave divider */
+        .wave-divider {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: var(--wave-height);
+            background: url('data:image/svg+xml;utf8,<svg viewBox="0 0 1200 120" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"><path d="M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V0Z" fill="%2300e5ff" opacity=".25"/><path d="M0,0V15.81C13,36.92,27.64,56.86,47.69,72.05,99.41,111.27,165,111,224.58,91.58c31.15-10.15,60.09-26.07,89.67-39.8,40.92-19,84.73-46,130.83-49.67,36.26-2.85,70.9,9.42,98.6,31.56,31.77,25.39,62.32,62,103.63,73,40.44,10.79,81.35-6.69,119.13-24.28s75.16-39,116.92-43.05c59.73-5.85,113.28,22.88,168.9,38.84,30.2,8.66,59,6.17,87.09-7.5,22.43-10.89,48-26.93,60.65-49.24V0Z" fill="%2300e5ff" opacity=".5"/><path d="M0,0V5.63C149.93,59,314.09,71.32,475.83,42.57c43-7.64,84.23-20.12,127.61-26.46,59-8.63,112.48,12.24,165.56,35.4C827.93,77.22,886,95.24,951.2,90c86.53-7,172.46-45.71,248.8-84.81V0Z" fill="%2300e5ff"/></svg>');
+            background-size: cover;
+            background-repeat: no-repeat;
+            transform: rotate(180deg);
+            z-index: 10;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        section {
+            padding: 100px 0;
+            position: relative;
+        }
+
+        /* Header Section */
+        .header {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            min-height: 100vh;
+            position: relative;
+            overflow: hidden;
+            padding-bottom: var(--wave-height);
+        }
+
+        .profile-pic-container {
+            position: relative;
+            width: 220px;
+            height: 220px;
+            margin-bottom: 30px;
+            perspective: 1000px;
+        }
+
+        .profile-pic {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid var(--glass);
+            box-shadow: var(--neon-glow);
+            transition: all 0.5s ease;
+            position: relative;
+            z-index: 1;
+            transform-style: preserve-3d;
+        }
+
+        .profile-pic::before {
+            content: '';
+            position: absolute;
+            top: -5px;
+            left: -5px;
+            right: -5px;
+            bottom: -5px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), var(--secondary), var(--primary-dark));
+            background-size: 200% 200%;
+            z-index: -1;
+            animation: gradientBorder 6s ease infinite;
+            opacity: 0.7;
+            filter: blur(5px);
+        }
+
+        @keyframes gradientBorder {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .profile-pic:hover {
+            transform: scale(1.05) rotateY(10deg) rotateX(5deg);
+            box-shadow: 0 0 30px var(--primary), 0 0 60px var(--primary), 0 0 90px rgba(0, 229, 255, 0.5);
+        }
+
+        .profile-info {
+            margin-top: 30px;
+            animation: fadeInUp 1.5s ease;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .username {
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--text-light);
+            margin-bottom: 15px;
+            text-shadow: 0 0 15px rgba(0, 229, 255, 0.5);
+            background: linear-gradient(to right, var(--primary), var(--primary-light));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .tagline {
+            font-size: 1.5rem;
+            color: var(--primary-light);
+            font-weight: 300;
+            margin-bottom: 40px;
+            position: relative;
+            display: inline-block;
+        }
+
+        .tagline::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 2px;
+            background: var(--primary);
+            border-radius: 3px;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { width: 80px; opacity: 1; }
+            50% { width: 120px; opacity: 0.7; }
+            100% { width: 80px; opacity: 1; }
+        }
+
+        /* Description Section */
+        .description {
+            background: var(--bg-light);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border-radius: 20px;
+            padding: 50px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            transform: translateY(50px);
+            opacity: 0;
+            transition: all 1s ease;
+            border: 1px solid rgba(0, 229, 255, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .description::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(0, 229, 255, 0.05) 0%, transparent 70%);
+            z-index: -1;
+        }
+
+        .description.in-view {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            color: var(--text-light);
+            margin-bottom: 40px;
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 0;
+            width: 80px;
+            height: 4px;
+            background: var(--primary);
+            border-radius: 3px;
+            animation: underwaterFlow 3s infinite;
+        }
+
+        @keyframes underwaterFlow {
+            0% { width: 80px; }
+            50% { width: 120px; opacity: 0.8; }
+            100% { width: 80px; }
+        }
+
+        .bio {
+            line-height: 1.8;
+            margin-bottom: 30px;
+            font-size: 1.1rem;
+        }
+
+        .history {
+            margin-top: 40px;
+        }
+
+        .history-item {
+            display: flex;
+            margin-bottom: 20px;
+            align-items: flex-start;
+            background: rgba(0, 180, 216, 0.1);
+            padding: 15px;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            border-left: 3px solid var(--primary);
+        }
+
+        .history-item:hover {
+            background: rgba(0, 180, 216, 0.2);
+            transform: translateX(10px);
+        }
+
+        .history-year {
+            background: var(--primary);
+            color: var(--bg-dark);
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-weight: 700;
+            margin-right: 20px;
+            flex-shrink: 0;
+            box-shadow: 0 0 10px var(--primary);
+        }
+
+        .history-content {
+            flex: 1;
+        }
+
+        /* Friends Section */
+        .friends-section {
+            background: linear-gradient(to bottom, var(--bg-dark), var(--bg-darker));
+            padding-bottom: 150px;
+        }
+
+        .friends-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 25px;
+            margin-top: 40px;
+        }
+
+        .friend-card {
+            background: var(--glass);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+            transition: all 0.4s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(0, 229, 255, 0.2);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .friend-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(0, 229, 255, 0.1) 0%, transparent 100%);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .friend-card:hover {
+            transform: translateY(-10px) rotate(3deg) scale(1.05);
+            box-shadow: 0 15px 30px rgba(0, 229, 255, 0.2);
+            border-color: var(--primary);
+        }
+
+        .friend-card:hover::before {
+            opacity: 1;
+        }
+
+        .friend-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid var(--glass);
+            margin-bottom: 15px;
+            transition: all 0.4s ease;
+            box-shadow: 0 0 20px rgba(0, 229, 255, 0.2);
+        }
+
+        .friend-card:hover .friend-avatar {
+            transform: scale(1.1) rotate(5deg);
+            border-color: var(--primary);
+            box-shadow: 0 0 30px var(--primary);
+        }
+
+        .friend-name {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--text-light);
+            margin-top: 10px;
+        }
+
+        /* Suggestions Section */
+        .suggestions-section {
+            position: relative;
+            padding-top: 150px;
+            background: var(--bg-darker);
+        }
+
+        .suggestions-list {
+            margin-top: 40px;
+        }
+
+        .suggestion-item {
+            background: var(--glass);
+            backdrop-filter: blur(10px);
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 15px;
+            transition: all 0.3s ease;
+            border-left: 4px solid var(--primary);
+            display: flex;
+            align-items: center;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .suggestion-item.in-view {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .suggestion-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 229, 255, 0.1);
+        }
+
+        .suggestion-status {
+            font-size: 1.5rem;
+            margin-right: 20px;
+            flex-shrink: 0;
+        }
+
+        .suggestion-status.implemented {
+            color: #00ff88;
+        }
+
+        .suggestion-status.pending {
+            color: #ffcc00;
+            animation: pulse 2s infinite;
+        }
+
+        .suggestion-status.idea {
+            color: var(--primary);
+        }
+
+        .suggestion-content {
+            flex: 1;
+        }
+
+        .suggestion-title {
+            font-weight: 600;
+            color: var(--text-light);
+            margin-bottom: 5px;
+        }
+
+        .suggestion-link {
+            color: var(--primary-light);
+            text-decoration: none;
+            font-size: 0.9rem;
+            display: inline-block;
+            margin-top: 5px;
+            transition: all 0.3s ease;
+        }
+
+        .suggestion-link:hover {
+            color: var(--primary);
+            text-decoration: underline;
+        }
+
+        .admin-controls {
+            margin-top: 40px;
+            background: var(--glass);
+            border-radius: 10px;
+            padding: 20px;
+            border: 1px dashed var(--primary);
+        }
+
+        .admin-title {
+            color: var(--primary);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+
+        .admin-title i {
+            margin-right: 10px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: var(--text-light);
+        }
+
+        input, textarea, select {
+            width: 100%;
+            padding: 10px;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--primary);
+            border-radius: 5px;
+            color: var(--text);
+            transition: all 0.3s ease;
+        }
+
+        input:focus, textarea:focus, select:focus {
+            outline: none;
+            border-color: var(--primary-light);
+            box-shadow: 0 0 10px var(--primary);
+        }
+
+        .btn {
+            background: var(--primary);
+            color: var(--bg-dark);
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .btn i {
+            margin-right: 8px;
+        }
+
+        .btn:hover {
+            background: var(--primary-light);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px var(--primary);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .username {
+                font-size: 2.2rem;
+            }
+            
+            .tagline {
+                font-size: 1.2rem;
+            }
+            
+            .friends-grid {
+                grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            }
+            
+            .description {
+                padding: 30px;
+            }
+            
+            .history-item {
+                flex-direction: column;
+            }
+            
+            .history-year {
+                margin-right: 0;
+                margin-bottom: 10px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .profile-pic-container {
+                width: 180px;
+                height: 180px;
+            }
+            
+            .username {
+                font-size: 1.8rem;
+            }
+            
+            .friends-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Underwater bubble background -->
+    <div class="bubbles" id="bubbles"></div>
+
+    <!-- Header Section -->
+    <header class="header">
+        <div class="container">
+            <div class="profile-pic-container">
+                <img src="https://i.imgur.com/J9LG8Yx.jpg" alt="Profile Picture" class="profile-pic">
+            </div>
+            <div class="profile-info">
+                <h1 class="username">OceanicUser</h1>
+                <p class="tagline">Diving deep into creativity</p>
+            </div>
+        </div>
+        <div class="wave-divider"></div>
+    </header>
+
+    <!-- Description Section -->
+    <section class="description-section">
+        <div class="container">
+            <div class="description" id="description">
+                <h2 class="section-title">About Me</h2>
+                <p class="bio">
+                    Hello! I'm a passionate digital creator with a love for aquatic themes and interactive design. 
+                    My journey has taken me through the depths of web development and the currents of creative expression. 
+                    When I'm not coding, you can find me exploring underwater photography or contributing to open-source projects.
+                </p>
+                
+                <div class="history">
+                    <h3 class="section-title">My xat Journey</h3>
+                    <div class="history-item">
+                        <span class="history-year">2015-2016</span>
+                        <div class="history-content">Joined xat community, started learning the ropes and making first connections</div>
+                    </div>
+                    <div class="history-item">
+                        <span class="history-year">2017</span>
+                        <div class="history-content">Became active contributor, helped organize several community events</div>
+                    </div>
+                    <div class="history-item">
+                        <span class="history-year">2018-2019</span>
+                        <div class="history-content">Took on moderator role, implemented new engagement strategies</div>
+                    </div>
+                    <div class="history-item">
+                        <span class="history-year">2020-Present</span>
+                        <div class="history-content">Leading community initiatives and mentoring new members</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Friends Section -->
+    <section class="friends-section">
+        <div class="container">
+            <h2 class="section-title">Coral Companions</h2>
+            <div class="friends-grid">
+                <div class="friend-card">
+                    <img src="https://i.imgur.com/5Z8W1Zu.jpg" alt="Friend Avatar" class="friend-avatar">
+                    <h3 class="friend-name">MarineFriend</h3>
+                </div>
+                <div class="friend-card">
+                    <img src="https://i.imgur.com/7J3QZ2x.jpg" alt="Friend Avatar" class="friend-avatar">
+                    <h3 class="friend-name">AquaBuddy</h3>
+                </div>
+                <div class="friend-card">
+                    <img src="https://i.imgur.com/9X8W1Zu.jpg" alt="Friend Avatar" class="friend-avatar">
+                    <h3 class="friend-name">DeepDiver</h3>
+                </div>
+                <div class="friend-card">
+                    <img src="https://i.imgur.com/2Z8W1Zu.jpg" alt="Friend Avatar" class="friend-avatar">
+                    <h3 class="friend-name">WaveMaker</h3>
+                </div>
+                <div class="friend-card">
+                    <img src="https://i.imgur.com/3Z8W1Zu.jpg" alt="Friend Avatar" class="friend-avatar">
+                    <h3 class="friend-name">TidalFriend</h3>
+                </div>
+                <div class="friend-card">
+                    <img src="https://i.imgur.com/4Z8W1Zu.jpg" alt="Friend Avatar" class="friend-avatar">
+                    <h3 class="friend-name">OceanLover</h3>
+                </div>
+                <div class="friend-card">
+                    <img src="https://i.imgur.com/6Z8W1Zu.jpg" alt="Friend Avatar" class="friend-avatar">
+                    <h3 class="friend-name">BlueHorizon</h3>
+                </div>
+                <div class="friend-card">
+                    <img src="https://i.imgur.com/8Z8W1Zu.jpg" alt="Friend Avatar" class="friend-avatar">
+                    <h3 class="friend-name">SeaExplorer</h3>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Suggestions Section -->
+    <section class="suggestions-section">
+        <div class="container">
+            <h2 class="section-title">Treasure Chest</h2>
+            <p style="margin-bottom: 30px; font-size: 1.1rem;">Ideas and suggestions for improving our community</p>
+            
+            <div class="suggestions-list">
+                <div class="suggestion-item" data-delay="0">
+                    <div class="suggestion-status implemented">✅</div>
+                    <div class="suggestion-content">
+                        <h3 class="suggestion-title">Improved Moderation Tools</h3>
+                        <p>Enhanced tools for community moderators to better manage discussions</p>
+                        <a href="#" class="suggestion-link">View forum post →</a>
+                    </div>
+                </div>
+                
+                <div class="suggestion-item" data-delay="100">
+                    <div class="suggestion-status pending">🔄</div>
+                    <div class="suggestion-content">
+                        <h3 class="suggestion-title">Monthly Theme Events</h3>
+                        <p>Organize monthly themed events to boost engagement</p>
+                        <a href="#" class="suggestion-link">View forum post →</a>
+                    </div>
+                </div>
+                
+                <div class="suggestion-item" data-delay="200">
+                    <div class="suggestion-status idea">💡</div>
+                    <div class="suggestion-content">
+                        <h3 class="suggestion-title">Underwater UI Theme</h3>
+                        <p>Create an optional aquatic-themed interface for the platform</p>
+                        <a href="#" class="suggestion-link">View forum post →</a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Admin Controls (would be conditionally shown for admins) -->
+            <div class="admin-controls">
+                <h3 class="admin-title"><i class="fas fa-user-shield"></i> Admin Controls</h3>
+                <div class="form-group">
+                    <label for="suggestion-title">Suggestion Title</label>
+                    <input type="text" id="suggestion-title" placeholder="Enter suggestion title">
+                </div>
+                <div class="form-group">
+                    <label for="suggestion-desc">Description</label>
+                    <textarea id="suggestion-desc" placeholder="Enter detailed description"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="suggestion-status">Status</label>
+                    <select id="suggestion-status">
+                        <option value="idea">💡 Idea</option>
+                        <option value="pending">🔄 Pending</option>
+                        <option value="implemented">✅ Implemented</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="suggestion-link">Forum Link</label>
+                    <input type="text" id="suggestion-link" placeholder="Enter forum post URL">
+                </div>
+                <button class="btn"><i class="fas fa-plus"></i> Add Suggestion</button>
+                <button class="btn" style="margin-left: 10px; background: var(--secondary);"><i class="fas fa-sync-alt"></i> Update List</button>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Create bubbles for background
+        function createBubbles() {
+            const bubblesContainer = document.getElementById('bubbles');
+            const bubbleCount = Math.floor(window.innerWidth / 10);
+            
+            for (let i = 0; i < bubbleCount; i++) {
+                const bubble = document.createElement('div');
+                bubble.classList.add('bubble');
+                
+                // Randomize bubble properties
+                const size = Math.random() * 20 + 5;
+                const posX = Math.random() * window.innerWidth;
+                const delay = Math.random() * 5;
+                const duration = Math.random() * 20 + 10;
+                const opacity = Math.random() * 0.5 + 0.1;
+                
+                bubble.style.width = `${size}px`;
+                bubble.style.height = `${size}px`;
+                bubble.style.left = `${posX}px`;
+                bubble.style.animationDelay = `${delay}s`;
+                bubble.style.animationDuration = `${duration}s`;
+                bubble.style.opacity = opacity;
+                
+                bubblesContainer.appendChild(bubble);
+            }
+        }
+
+        // Intersection Observer for scroll animations
+        function setupIntersectionObserver() {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('in-view');
+                        
+                        // For suggestion items with delay
+                        if (entry.target.hasAttribute('data-delay')) {
+                            const delay = entry.target.getAttribute('data-delay');
+                            entry.target.style.transitionDelay = `${delay}ms`;
+                        }
+                    }
+                });
+            }, { threshold: 0.1 });
+            
+            // Observe elements
+            document.querySelectorAll('.description, .suggestion-item').forEach(el => {
+                observer.observe(el);
+            });
+        }
+
+        // Mouse move parallax effect for profile picture
+        function setupParallax() {
+            const profilePic = document.querySelector('.profile-pic-container');
+            
+            document.addEventListener('mousemove', (e) => {
+                const xAxis = (window.innerWidth / 2 - e.pageX) / 25;
+                const yAxis = (window.innerHeight / 2 - e.pageY) / 25;
+                profilePic.style.transform = `rotateY(${xAxis}deg) rotateX(${yAxis}deg)`;
+            });
+            
+            // Reset when mouse leaves
+            document.addEventListener('mouseleave', () => {
+                profilePic.style.transform = 'rotateY(0) rotateX(0)';
+            });
+        }
+
+        // Initialize everything when DOM loads
+        document.addEventListener('DOMContentLoaded', () => {
+            createBubbles();
+            setupIntersectionObserver();
+            setupParallax();
+            
+            // Responsive adjustments
+            window.addEventListener('resize', () => {
+                document.getElementById('bubbles').innerHTML = '';
+                createBubbles();
+            });
+        });
+    </script>
+</body>
+</html>
