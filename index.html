@@ -40,11 +40,11 @@
         body {
             background: linear-gradient(to bottom, 
                 #87CEEB 0%, 
-                #87CEEB 12%,
-                var(--surface-blue) 15%, 
-                var(--mid-blue) 30%,
-                var(--deep-blue) 50%, 
-                var(--abyss-blue) 70%, 
+                #87CEEB 8%,
+                var(--surface-blue) 12%, 
+                var(--mid-blue) 25%,
+                var(--deep-blue) 45%, 
+                var(--abyss-blue) 65%, 
                 var(--trench-black) 100%);
             color: var(--text-light);
             overflow-x: hidden;
@@ -124,20 +124,20 @@
             position: fixed;
             top: 0;
             left: 20%;
-            width: 2px;
+            width: 1px;
             height: 100vh;
             background: linear-gradient(to bottom, 
-                rgba(0, 200, 255, 0.4), 
-                rgba(0, 200, 255, 0.2) 15%,
-                rgba(0, 200, 255, 0.1) 30%,
-                rgba(0, 200, 255, 0.05) 50%,
+                rgba(0, 200, 255, 0.2), 
+                rgba(0, 200, 255, 0.1) 15%,
+                rgba(0, 200, 255, 0.05) 30%,
+                rgba(0, 200, 255, 0.02) 50%,
                 transparent 70%);
             transform: rotate(12deg);
             transform-origin: top;
             z-index: -1;
-            animation: ray-shift 20s infinite alternate;
-            filter: blur(1px);
-            opacity: 0.3;
+            animation: ray-shift 25s infinite alternate;
+            filter: blur(2px);
+            opacity: 0.1;
         }
 
         @keyframes ray-shift {
@@ -409,17 +409,17 @@
             width: 400%;
             height: 300px;
             background: 
-                radial-gradient(ellipse 200% 120% at 20% 0%, rgba(0, 229, 255, 0.8) 0%, transparent 80%),
-                radial-gradient(ellipse 150% 90% at 60% 0%, rgba(0, 229, 255, 0.7) 0%, transparent 70%),
-                radial-gradient(ellipse 120% 70% at 40% 0%, rgba(0, 229, 255, 0.6) 0%, transparent 60%),
-                radial-gradient(ellipse 100% 60% at 80% 0%, rgba(0, 229, 255, 0.5) 0%, transparent 50%),
-                radial-gradient(ellipse 80% 50% at 10% 0%, rgba(0, 229, 255, 0.4) 0%, transparent 40%);
-            background-size: 350% 100%, 280% 100%, 220% 100%, 180% 100%, 140% 100%;
+                radial-gradient(ellipse 250% 150% at 15% 0%, rgba(0, 229, 255, 0.9) 0%, transparent 85%),
+                radial-gradient(ellipse 180% 110% at 55% 0%, rgba(0, 229, 255, 0.8) 0%, transparent 75%),
+                radial-gradient(ellipse 140% 85% at 35% 0%, rgba(0, 229, 255, 0.7) 0%, transparent 65%),
+                radial-gradient(ellipse 120% 75% at 75% 0%, rgba(0, 229, 255, 0.6) 0%, transparent 55%),
+                radial-gradient(ellipse 100% 65% at 5% 0%, rgba(0, 229, 255, 0.5) 0%, transparent 45%);
+            background-size: 400% 100%, 320% 100%, 250% 100%, 200% 100%, 160% 100%;
             background-position: 0% 0%, 0% 0%, 0% 0%, 0% 0%, 0% 0%;
-            animation: ultra-wave-flow 12s infinite linear;
-            opacity: 0.9;
+            animation: ultra-wave-flow 15s infinite linear;
+            opacity: 0.95;
             transform-origin: center top;
-            filter: blur(0.5px);
+            filter: blur(0.8px);
         }
 
         .water-surface::before {
@@ -459,46 +459,37 @@
                 background-position: 0% 0%, 0% 0%, 0% 0%, 0% 0%, 0% 0%;
                 transform: translateX(0) scaleY(1) rotate(0deg);
             }
-            8% {
-                transform: translateX(-8%) scaleY(1.08) rotate(0.3deg);
+            10% {
+                transform: translateX(-10%) scaleY(1.15) rotate(0.5deg);
             }
-            16% {
-                transform: translateX(-16%) scaleY(1.12) rotate(0.6deg);
+            20% {
+                transform: translateX(-20%) scaleY(1.25) rotate(1deg);
             }
-            24% {
-                transform: translateX(-24%) scaleY(1.16) rotate(0.9deg);
-            }
-            32% {
-                transform: translateX(-32%) scaleY(1.14) rotate(1.2deg);
+            30% {
+                transform: translateX(-30%) scaleY(1.3) rotate(1.5deg);
             }
             40% {
-                transform: translateX(-40%) scaleY(1.1) rotate(1.5deg);
+                transform: translateX(-40%) scaleY(1.25) rotate(2deg);
             }
-            48% {
-                transform: translateX(-48%) scaleY(1.06) rotate(1.8deg);
+            50% { 
+                background-position: -200% 0%, -160% 0%, -125% 0%, -100% 0%, -80% 0%;
+                transform: translateX(-50%) scaleY(1) rotate(2.5deg);
             }
-            56% { 
-                background-position: -150% 0%, -125% 0%, -100% 0%, -75% 0%, -50% 0%;
-                transform: translateX(-56%) scaleY(1) rotate(2.1deg);
+            60% {
+                transform: translateX(-60%) scaleY(0.85) rotate(3deg);
             }
-            64% {
-                transform: translateX(-64%) scaleY(0.94) rotate(2.4deg);
-            }
-            72% {
-                transform: translateX(-72%) scaleY(0.88) rotate(2.7deg);
+            70% {
+                transform: translateX(-70%) scaleY(0.75) rotate(3.5deg);
             }
             80% {
-                transform: translateX(-80%) scaleY(0.82) rotate(3deg);
+                transform: translateX(-80%) scaleY(0.7) rotate(4deg);
             }
-            88% {
-                transform: translateX(-88%) scaleY(0.88) rotate(3.3deg);
-            }
-            96% {
-                transform: translateX(-96%) scaleY(0.94) rotate(3.6deg);
+            90% {
+                transform: translateX(-90%) scaleY(0.8) rotate(4.5deg);
             }
             100% { 
-                background-position: -300% 0%, -250% 0%, -200% 0%, -150% 0%, -100% 0%;
-                transform: translateX(-100%) scaleY(1) rotate(4deg);
+                background-position: -400% 0%, -320% 0%, -250% 0%, -200% 0%, -160% 0%;
+                transform: translateX(-100%) scaleY(1) rotate(5deg);
             }
         }
 
@@ -555,6 +546,54 @@
             transition: var(--transition);
             position: relative;
             z-index: 1;
+        }
+
+        /* Echo effect around profile picture */
+        .profile-echo {
+            position: absolute;
+            top: -20px;
+            left: -20px;
+            right: -20px;
+            bottom: -20px;
+            border-radius: 50%;
+            border: 2px solid rgba(0, 229, 255, 0.3);
+            animation: echo-pulse 3s infinite;
+            z-index: 0;
+        }
+
+        .profile-echo::before {
+            content: '';
+            position: absolute;
+            top: -10px;
+            left: -10px;
+            right: -10px;
+            bottom: -10px;
+            border-radius: 50%;
+            border: 1px solid rgba(0, 229, 255, 0.2);
+            animation: echo-pulse 3s infinite 0.5s;
+        }
+
+        .profile-echo::after {
+            content: '';
+            position: absolute;
+            top: -20px;
+            left: -20px;
+            right: -20px;
+            bottom: -20px;
+            border-radius: 50%;
+            border: 1px solid rgba(0, 229, 255, 0.1);
+            animation: echo-pulse 3s infinite 1s;
+        }
+
+        @keyframes echo-pulse {
+            0% {
+                transform: scale(0.8);
+                opacity: 1;
+            }
+            100% {
+                transform: scale(1.2);
+                opacity: 0;
+            }
         }
 
         .profile-pic::before {
@@ -1154,6 +1193,7 @@
         </div>
         <div class="container">
             <div class="profile-pic-container">
+                <div class="profile-echo"></div>
                 <img src="https://i.imgur.com/J9LG8Yx.jpg" alt="Profile Picture" class="profile-pic">
             </div>
             <div class="profile-info">
@@ -1693,14 +1733,14 @@
             if (!ripplesContainer) return;
             
             // Create initial ripples
-            for (let i = 0; i < 5; i++) {
+            for (let i = 0; i < 3; i++) {
                 createRipple(ripplesContainer);
             }
             
             // Create new ripples periodically with varying intervals
             setInterval(() => {
                 createRipple(ripplesContainer);
-            }, Math.random() * 2000 + 1000);
+            }, Math.random() * 3000 + 2000);
         }
 
         function createRipple(container) {
@@ -1724,7 +1764,7 @@
             ripple.style.height = `${size}px`;
             
             // Add random opacity and color variation
-            const opacity = Math.random() * 0.4 + 0.2;
+            const opacity = Math.random() * 0.2 + 0.1;
             ripple.style.borderColor = `rgba(0, 229, 255, ${opacity})`;
             
             container.appendChild(ripple);
