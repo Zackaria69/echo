@@ -547,10 +547,10 @@
             position: absolute;
             bottom: 0;
             left: 0;
-            width: 400%;
+            width: 200%;
             height: 100%;
             background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 200" preserveAspectRatio="none"><path d="M0,200 Q150,150 300,180 T600,160 T900,140 T1200,120 L1200,200 Z" fill="%2300e5ff"/><path d="M0,200 Q200,120 400,140 T800,120 T1200,100 L1200,200 Z" fill="%2300ccff"/><path d="M0,200 Q250,100 500,120 T900,100 T1200,80 L1200,200 Z" fill="%2300b3ff"/></svg>');
-            background-size: 25% 100%;
+            background-size: 50% 100%;
             animation: realistic-wave 15s infinite linear;
             opacity: 0.8;
         }
@@ -559,35 +559,35 @@
             animation-duration: 12s;
             animation-delay: 0s;
             opacity: 0.9;
-            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 200" preserveAspectRatio="none"><path d="M0,200 Q100,80 200,120 Q300,160 400,100 Q500,140 600,80 Q700,120 800,60 Q900,100 1000,40 Q1100,80 1200,20 L1200,200 Z" fill="%2300e5ff"/></svg>');
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 200" preserveAspectRatio="none"><path d="M0,200 Q150,80 300,120 Q450,160 600,100 Q750,140 900,80 Q1050,120 1200,60 L1200,200 Z" fill="%2300e5ff"/></svg>');
         }
 
         .wave-layer-2 {
             animation-duration: 15s;
             animation-delay: -3s;
             opacity: 0.7;
-            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 200" preserveAspectRatio="none"><path d="M0,200 Q150,60 300,100 Q450,140 600,80 Q750,120 900,60 Q1050,100 1200,40 L1200,200 Z" fill="%2300ccff"/></svg>');
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 200" preserveAspectRatio="none"><path d="M0,200 Q200,60 400,100 Q600,140 800,80 Q1000,120 1200,40 L1200,200 Z" fill="%2300ccff"/></svg>');
         }
 
         .wave-layer-3 {
             animation-duration: 18s;
             animation-delay: -6s;
             opacity: 0.5;
-            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 200" preserveAspectRatio="none"><path d="M0,200 Q200,40 400,80 Q600,120 800,60 Q1000,100 1200,20 L1200,200 Z" fill="%2300b3ff"/></svg>');
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 200" preserveAspectRatio="none"><path d="M0,200 Q250,40 500,80 Q750,120 1000,60 Q1250,100 1200,20 L1200,200 Z" fill="%2300b3ff"/></svg>');
         }
 
         .wave-layer-4 {
             animation-duration: 20s;
             animation-delay: -9s;
             opacity: 0.3;
-            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 200" preserveAspectRatio="none"><path d="M0,200 Q250,20 500,60 Q750,100 1000,40 Q1250,80 1200,0 L1200,200 Z" fill="%230099ff"/></svg>');
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 200" preserveAspectRatio="none"><path d="M0,200 Q300,20 600,60 Q900,100 1200,40 L1200,200 Z" fill="%230099ff"/></svg>');
         }
 
         .wave-layer-5 {
             animation-duration: 25s;
             animation-delay: -12s;
             opacity: 0.2;
-            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 200" preserveAspectRatio="none"><path d="M0,200 Q300,0 600,40 Q900,80 1200,20 L1200,200 Z" fill="%230080ff"/></svg>');
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 200" preserveAspectRatio="none"><path d="M0,200 Q350,0 700,40 Q1050,80 1200,20 L1200,200 Z" fill="%230080ff"/></svg>');
         }
 
         .water-foam {
@@ -605,24 +605,12 @@
 
         @keyframes realistic-wave {
             0% { 
-                transform: translateX(0) scaleY(1);
+                transform: translateX(0);
                 background-position: 0% 0%;
             }
-            25% {
-                transform: translateX(-25%) scaleY(1.1);
-                background-position: -25% 0%;
-            }
-            50% { 
-                transform: translateX(-50%) scaleY(0.9);
-                background-position: -50% 0%;
-            }
-            75% {
-                transform: translateX(-75%) scaleY(1.05);
-                background-position: -75% 0%;
-            }
             100% { 
-                transform: translateX(-100%) scaleY(1);
-                background-position: -100% 0%;
+                transform: translateX(-50%);
+                background-position: -50% 0%;
             }
         }
 
