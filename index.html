@@ -134,7 +134,7 @@
             position: relative;
         }
 
-        /* Header Section - Surface with Sky */
+        /* Header Section - Clean Sky and Water */
         .header {
             display: flex;
             flex-direction: column;
@@ -144,15 +144,10 @@
             min-height: 100vh;
             position: relative;
             overflow: hidden;
-            background: linear-gradient(to bottom, 
-                rgba(135, 206, 235, 0.1) 0%,
-                rgba(135, 206, 235, 0.05) 30%,
-                rgba(0, 180, 255, 0.1) 60%,
-                rgba(0, 180, 255, 0.2) 100%);
         }
 
-        /* Advanced Sky Effects */
-        .sky-effects {
+        /* Clean Sky Container */
+        .sky-container {
             position: absolute;
             top: 0;
             left: 0;
@@ -160,7 +155,6 @@
             height: 100%;
             z-index: -2;
             overflow: hidden;
-            opacity: 0.7;
         }
 
         .sky-gradient {
@@ -294,6 +288,41 @@
             z-index: 5;
         }
 
+        /* Simple Water Surface */
+        .simple-water-surface {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(
+                to bottom,
+                rgba(0, 229, 255, 0.8) 0%,
+                rgba(0, 229, 255, 0.6) 30%,
+                rgba(0, 229, 255, 0.4) 60%,
+                rgba(0, 229, 255, 0.2) 100%
+            );
+            z-index: -1;
+            border-radius: 50% 50% 0 0 / 100% 100% 0 0;
+            animation: water-float 8s ease-in-out infinite;
+        }
+
+        /* Profile Section */
+        .profile-section {
+            position: relative;
+            z-index: 10;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 50px 20px;
+        }
+
+        @keyframes water-float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
         @keyframes pulse {
             0% { transform: translate(-50%, -50%) scale(1); opacity: 0.5; }
             100% { transform: translate(-50%, -50%) scale(1.3); opacity: 0.8; }
@@ -366,128 +395,7 @@
             }
         }
 
-        /* Ultra Realistic Water Surface Animation */
-        .water-surface {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 400%;
-            height: 300px;
-            background: 
-                radial-gradient(ellipse 300% 200% at 10% 0%, rgba(0, 229, 255, 1) 0%, transparent 90%),
-                radial-gradient(ellipse 220% 140% at 50% 0%, rgba(0, 229, 255, 0.9) 0%, transparent 80%),
-                radial-gradient(ellipse 180% 120% at 30% 0%, rgba(0, 229, 255, 0.8) 0%, transparent 70%),
-                radial-gradient(ellipse 150% 100% at 70% 0%, rgba(0, 229, 255, 0.7) 0%, transparent 60%),
-                radial-gradient(ellipse 120% 80% at 20% 0%, rgba(0, 229, 255, 0.6) 0%, transparent 50%),
-                radial-gradient(ellipse 100% 70% at 80% 0%, rgba(0, 229, 255, 0.5) 0%, transparent 40%);
-            background-size: 450% 100%, 350% 100%, 280% 100%, 220% 100%, 180% 100%, 140% 100%;
-            background-position: 0% 0%, 0% 0%, 0% 0%, 0% 0%, 0% 0%, 0% 0%;
-            animation: ultra-wave-flow 15s infinite linear;
-            opacity: 1;
-            transform-origin: center top;
-            filter: blur(0.5px);
-        }
 
-        .water-surface::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: 
-                radial-gradient(ellipse 80% 40% at 30% 0%, rgba(0, 229, 255, 0.3) 0%, transparent 50%),
-                radial-gradient(ellipse 60% 30% at 70% 0%, rgba(0, 229, 255, 0.2) 0%, transparent 50%);
-            background-size: 120% 100%, 80% 100%;
-            background-position: 0% 0%, 0% 0%;
-            animation: wave-flow-secondary 12s infinite linear reverse;
-            opacity: 0.6;
-        }
-
-        .water-surface::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: 
-                radial-gradient(ellipse 90% 45% at 20% 0%, rgba(0, 229, 255, 0.25) 0%, transparent 50%),
-                radial-gradient(ellipse 70% 35% at 80% 0%, rgba(0, 229, 255, 0.15) 0%, transparent 50%);
-            background-size: 140% 100%, 90% 100%;
-            background-position: 0% 0%, 0% 0%;
-            animation: wave-flow-tertiary 10s infinite linear;
-            opacity: 0.4;
-        }
-
-        @keyframes ultra-wave-flow {
-            0% { 
-                background-position: 0% 0%, 0% 0%, 0% 0%, 0% 0%, 0% 0%;
-                transform: translateX(0) scaleY(1) rotate(0deg);
-            }
-            10% {
-                transform: translateX(-10%) scaleY(1.15) rotate(0.5deg);
-            }
-            20% {
-                transform: translateX(-20%) scaleY(1.25) rotate(1deg);
-            }
-            30% {
-                transform: translateX(-30%) scaleY(1.3) rotate(1.5deg);
-            }
-            40% {
-                transform: translateX(-40%) scaleY(1.25) rotate(2deg);
-            }
-            50% { 
-                background-position: -200% 0%, -160% 0%, -125% 0%, -100% 0%, -80% 0%;
-                transform: translateX(-50%) scaleY(1) rotate(2.5deg);
-            }
-            60% {
-                transform: translateX(-60%) scaleY(0.85) rotate(3deg);
-            }
-            70% {
-                transform: translateX(-70%) scaleY(0.75) rotate(3.5deg);
-            }
-            80% {
-                transform: translateX(-80%) scaleY(0.7) rotate(4deg);
-            }
-            90% {
-                transform: translateX(-90%) scaleY(0.8) rotate(4.5deg);
-            }
-            100% { 
-                background-position: -400% 0%, -320% 0%, -250% 0%, -200% 0%, -160% 0%;
-                transform: translateX(-100%) scaleY(1) rotate(5deg);
-            }
-        }
-
-        @keyframes wave-flow-secondary {
-            0% { 
-                background-position: 0% 0%, 0% 0%;
-                transform: translateX(0) scaleY(0.8);
-            }
-            50% { 
-                background-position: -60% 0%, -40% 0%;
-                transform: translateX(-50%) scaleY(1.2);
-            }
-            100% { 
-                background-position: -120% 0%, -80% 0%;
-                transform: translateX(-100%) scaleY(0.8);
-            }
-        }
-
-        @keyframes wave-flow-tertiary {
-            0% { 
-                background-position: 0% 0%, 0% 0%;
-                transform: translateX(0) scaleY(1.2);
-            }
-            50% { 
-                background-position: -70% 0%, -45% 0%;
-                transform: translateX(-50%) scaleY(0.9);
-            }
-            100% { 
-                background-position: -140% 0%, -90% 0%;
-                transform: translateX(-100%) scaleY(1.2);
-            }
-        }
 
         .profile-pic-container {
             position: relative;
@@ -1130,9 +1038,10 @@
 
     <div class="light-ray"></div>
 
-    <!-- Header Section - Surface with Advanced Sky -->
+    <!-- Header Section - Clean Sky and Water -->
     <header class="header">
-        <div class="sky-effects" id="skyEffects">
+        <!-- Clean Sky Container -->
+        <div class="sky-container">
             <div class="sky-gradient"></div>
             <div class="celestial-rays sun-rays"></div>
             <div class="celestial-body sun"></div>
@@ -1151,11 +1060,12 @@
             
             <div class="atmospheric-haze"></div>
         </div>
-        <div class="surface-effects">
-            <div class="water-surface"></div>
-            <div class="water-ripples" id="waterRipples"></div>
-        </div>
-        <div class="container">
+        
+        <!-- Simple Water Surface -->
+        <div class="simple-water-surface"></div>
+        
+        <!-- Profile Section -->
+        <div class="profile-section">
             <div class="profile-pic-container">
                 <div class="profile-echo"></div>
                 <img src="https://i.imgur.com/J9LG8Yx.jpg" alt="Profile Picture" class="profile-pic">
@@ -1881,8 +1791,6 @@
         // Initialize everything when DOM loads
         document.addEventListener('DOMContentLoaded', () => {
             createAdvancedSkyEffects();
-            createSeabed();
-            createWaterRipples();
             setupIntersectionObserver();
             setupParallax();
             addTimeControls(); // Add time controls
@@ -1897,13 +1805,6 @@
                 clearAdvancedClouds();
                 generateAdvancedClouds();
                 updateSky();
-                
-                // Recreate water effects
-                document.querySelector('.abyss-effects').innerHTML = '';
-                document.getElementById('waterRipples').innerHTML = '';
-                
-                createSeabed();
-                createWaterRipples();
             });
         });
     </script>
