@@ -40,11 +40,11 @@
         body {
             background: linear-gradient(to bottom, 
                 #87CEEB 0%, 
-                #87CEEB 5%,
-                var(--surface-blue) 10%, 
-                var(--mid-blue) 20%,
-                var(--deep-blue) 35%, 
-                var(--abyss-blue) 55%, 
+                #87CEEB 3%,
+                var(--surface-blue) 8%, 
+                var(--mid-blue) 18%,
+                var(--deep-blue) 32%, 
+                var(--abyss-blue) 50%, 
                 var(--trench-black) 100%);
             color: var(--text-light);
             overflow-x: hidden;
@@ -1212,7 +1212,6 @@
 
     <!-- Suggestions Section - Mid Water -->
     <section class="suggestions-section">
-        <div class="mid-water-effects" id="midWaterEffects"></div>
         <div class="container">
             <h2 class="section-title">My Suggestions</h2>
             <p style="margin-bottom: 30px; font-size: 1.1rem; text-shadow: var(--text-glow);">Ideas I've shared with the xat community</p>
@@ -1250,7 +1249,6 @@
 
     <!-- Friends Section - Deep Water -->
     <section class="friends-section">
-        <div class="deep-water-effects" id="deepWaterEffects"></div>
         <div class="container">
             <h2 class="section-title">Dive Team</h2>
             <p style="margin-bottom: 30px; font-size: 1.1rem; text-shadow: var(--text-glow);">The fellow explorers who join me on these deep dives</p>
@@ -1883,8 +1881,6 @@
         // Initialize everything when DOM loads
         document.addEventListener('DOMContentLoaded', () => {
             createAdvancedSkyEffects();
-            createParticles('deepWaterEffects', 40, 3, 18, 12, 35);
-            createParticles('midWaterEffects', 30, 2, 15, 10, 20);
             createSeabed();
             createWaterRipples();
             setupIntersectionObserver();
@@ -1903,13 +1899,9 @@
                 updateSky();
                 
                 // Recreate water effects
-                document.getElementById('deepWaterEffects').innerHTML = '';
-                document.getElementById('midWaterEffects').innerHTML = '';
                 document.querySelector('.abyss-effects').innerHTML = '';
                 document.getElementById('waterRipples').innerHTML = '';
                 
-                createParticles('deepWaterEffects', 40, 3, 18, 12, 35);
-                createParticles('midWaterEffects', 30, 2, 15, 10, 20);
                 createSeabed();
                 createWaterRipples();
             });
