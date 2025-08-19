@@ -1028,8 +1028,6 @@
             <div class="sky-gradient"></div>
             <div class="celestial-rays sun-rays"></div>
             <div class="celestial-body sun"></div>
-            <div class="celestial-body moon"></div>
-            <div class="celestial-rays moon-rays"></div>
             <div class="lens-flare" id="lens-flare-1"></div>
             <div class="lens-flare" id="lens-flare-2"></div>
             <div class="lens-flare" id="lens-flare-3"></div>
@@ -1378,39 +1376,19 @@
 
         function updateSky() {
             const sun = document.querySelector('.sun');
-            const moon = document.querySelector('.moon');
             const sunRays = document.querySelector('.sun-rays');
-            const moonRays = document.querySelector('.moon-rays');
             const skyGradient = document.querySelector('.sky-gradient');
             const stars = document.getElementById('stars');
             
-            if (!sun || !moon || !skyGradient) return;
+            if (!sun || !skyGradient) return;
             
-            // Determine which time segment we're in
-            let segment;
-            if (skyConfig.timeOfDay < 0.25) segment = 0; // Night
-            else if (skyConfig.timeOfDay < 0.35) segment = 1; // Dawn
-            else if (skyConfig.timeOfDay < 0.65) segment = 2; // Day
-            else if (skyConfig.timeOfDay < 0.75) segment = 3; // Dusk
-            else segment = 4; // Night
-            
-            // Calculate blend factor within segment
-            let blend;
-            if (segment === 0) blend = skyConfig.timeOfDay / 0.25;
-            else if (segment === 1) blend = (skyConfig.timeOfDay - 0.25) / 0.1;
-            else if (segment === 2) blend = (skyConfig.timeOfDay - 0.35) / 0.3;
-            else if (segment === 3) blend = (skyConfig.timeOfDay - 0.65) / 0.1;
-            else blend = (skyConfig.timeOfDay - 0.75) / 0.25;
-            
-            const from = timeColors[segment];
-            const to = timeColors[segment + 1] || timeColors[segment];
-            
-            const topColor = interpolateColor(from.top, to.top, blend);
-            const middleColor = interpolateColor(from.middle, to.middle, blend);
-            const bottomColor = interpolateColor(from.bottom, to.bottom, blend);
-            const sunColor = interpolateColor(from.sun, to.sun, blend);
-            const sunGlow = interpolateColor(from.glow, to.glow, blend);
-            const celestialOpacity = interpolateValue(from.celestialOpacity, to.celestialOpacity, blend);
+            // Always use bright daytime colors
+            const topColor = '#1a2a5a';
+            const middleColor = '#4b8ddf';
+            const bottomColor = '#a7c8f2';
+            const sunColor = '#ffde00';
+            const sunGlow = '#ff8c00';
+            const celestialOpacity = 1;
             
             // Update CSS variables
             document.documentElement.style.setProperty('--sky-top', topColor);
@@ -1420,26 +1398,9 @@
             document.documentElement.style.setProperty('--sun-glow', sunGlow);
             document.documentElement.style.setProperty('--celestial-body-opacity', celestialOpacity);
             
-            // Position celestial bodies based on time of day
-            const isDay = skyConfig.timeOfDay >= 0.35 && skyConfig.timeOfDay < 0.65;
-            const bodyX = 0.2 + (skyConfig.timeOfDay * 0.6);
-            
-            // Sun follows a smooth arc but never goes all the way down
-            let bodyY;
-            if (skyConfig.timeOfDay < 0.35) {
-                // Before day - sun rising
-                bodyY = 0.1 + (skyConfig.timeOfDay / 0.35) * 0.8;
-            } else if (skyConfig.timeOfDay < 0.65) {
-                // Daytime - sun at top
-                bodyY = 0.9 - ((skyConfig.timeOfDay - 0.35) / 0.3) * 0.8;
-            } else {
-                // After day - sun setting but not all the way
-                bodyY = 0.1 + ((skyConfig.timeOfDay - 0.65) / 0.35) * 0.8;
-            }
-            
-            // Moon follows opposite path
-            const moonX = 1 - bodyX;
-            const moonY = bodyY;
+            // Always position sun in bright daytime position
+            const bodyX = 0.5; // Center horizontally
+            const bodyY = 0.2; // High in the sky
             
             sun.style.left = `${bodyX * 100}%`;
             sun.style.top = `${bodyY * 100}%`;
@@ -1448,19 +1409,10 @@
                 sunRays.style.top = `${bodyY * 100}%`;
             }
             
-            moon.style.left = `${moonX * 100}%`;
-            moon.style.top = `${moonY * 100}%`;
-            if (moonRays) {
-                moonRays.style.left = `${moonX * 100}%`;
-                moonRays.style.top = `${moonY * 100}%`;
-            }
-            
-            // Adjust size based on position (larger near horizon)
-            const bodySize = 3 + (Math.abs(0.5 - bodyY) * 2);
+            // Sun size for bright daytime
+            const bodySize = 4;
             sun.style.width = `${bodySize}vmin`;
             sun.style.height = `${bodySize}vmin`;
-            moon.style.width = `${bodySize * 0.9}vmin`;
-            moon.style.height = `${bodySize * 0.9}vmin`;
             
             // Stars always visible
             if (stars) {
@@ -1728,7 +1680,7 @@
             return Math.random() * (max - min) + min;
         }
 
-        // Add time of day controls
+        // Add cloud controls only
         function addTimeControls() {
             const controls = document.createElement('div');
             controls.style.cssText = `
@@ -1745,9 +1697,6 @@
             `;
             
             controls.innerHTML = `
-                <div style="margin-bottom: 5px;">
-                    <label>Time: <input type="range" id="time-slider" min="0" max="1" step="0.01" value="0.45" style="width: 60px;"></label>
-                </div>
                 <div>
                     <label>Clouds: <input type="range" id="cloud-slider" min="0" max="1" step="0.1" value="0.3" style="width: 60px;"></label>
                 </div>
@@ -1756,13 +1705,7 @@
             document.body.appendChild(controls);
             
             // Add event listeners
-            const timeSlider = document.getElementById('time-slider');
             const cloudSlider = document.getElementById('cloud-slider');
-            
-            timeSlider.addEventListener('input', (e) => {
-                skyConfig.timeOfDay = parseFloat(e.target.value);
-                updateSky();
-            });
             
             cloudSlider.addEventListener('input', (e) => {
                 skyConfig.cloudDensity = parseFloat(e.target.value);
