@@ -1237,7 +1237,7 @@
         // Advanced Sky Configuration
         const skyConfig = {
             cloudDensity: 0.3,
-            timeOfDay: 0.5,
+            timeOfDay: 0.45,
             windSpeed: 0.8,
             cloudTypes: {
                 cirrus: { size: [80, 200], opacity: 0.4, blur: 12, yRange: [0.1, 0.25], speed: 0.15 },
@@ -1746,7 +1746,7 @@
             
             controls.innerHTML = `
                 <div style="margin-bottom: 5px;">
-                    <label>Time: <input type="range" id="time-slider" min="0" max="1" step="0.01" value="0.5" style="width: 60px;"></label>
+                    <label>Time: <input type="range" id="time-slider" min="0" max="1" step="0.01" value="0.45" style="width: 60px;"></label>
                 </div>
                 <div>
                     <label>Clouds: <input type="range" id="cloud-slider" min="0" max="1" step="0.1" value="0.3" style="width: 60px;"></label>
