@@ -40,11 +40,11 @@
         body {
             background: linear-gradient(to bottom, 
                 #87CEEB 0%, 
-                #87CEEB 8%,
-                var(--surface-blue) 12%, 
-                var(--mid-blue) 25%,
-                var(--deep-blue) 45%, 
-                var(--abyss-blue) 65%, 
+                #87CEEB 5%,
+                var(--surface-blue) 10%, 
+                var(--mid-blue) 20%,
+                var(--deep-blue) 35%, 
+                var(--abyss-blue) 55%, 
                 var(--trench-black) 100%);
             color: var(--text-light);
             overflow-x: hidden;
@@ -83,42 +83,7 @@
             color: var(--surface-blue);
         }
 
-        /* Water Particles */
-        .water-particles {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            pointer-events: none;
-            overflow: hidden;
-        }
 
-        .particle {
-            position: absolute;
-            background: rgba(255, 255, 255, 0.8);
-            border-radius: 50%;
-            filter: blur(1px);
-            animation: float linear infinite;
-        }
-
-        @keyframes float {
-            0% {
-                transform: translateY(0) translateX(0);
-                opacity: 0;
-            }
-            10% {
-                opacity: 0.3;
-            }
-            90% {
-                opacity: 0.3;
-            }
-            100% {
-                transform: translateY(-100vh) translateX(20px);
-                opacity: 0;
-            }
-        }
 
         .light-ray {
             position: fixed;
@@ -409,17 +374,18 @@
             width: 400%;
             height: 300px;
             background: 
-                radial-gradient(ellipse 250% 150% at 15% 0%, rgba(0, 229, 255, 0.9) 0%, transparent 85%),
-                radial-gradient(ellipse 180% 110% at 55% 0%, rgba(0, 229, 255, 0.8) 0%, transparent 75%),
-                radial-gradient(ellipse 140% 85% at 35% 0%, rgba(0, 229, 255, 0.7) 0%, transparent 65%),
-                radial-gradient(ellipse 120% 75% at 75% 0%, rgba(0, 229, 255, 0.6) 0%, transparent 55%),
-                radial-gradient(ellipse 100% 65% at 5% 0%, rgba(0, 229, 255, 0.5) 0%, transparent 45%);
-            background-size: 400% 100%, 320% 100%, 250% 100%, 200% 100%, 160% 100%;
-            background-position: 0% 0%, 0% 0%, 0% 0%, 0% 0%, 0% 0%;
+                radial-gradient(ellipse 300% 200% at 10% 0%, rgba(0, 229, 255, 1) 0%, transparent 90%),
+                radial-gradient(ellipse 220% 140% at 50% 0%, rgba(0, 229, 255, 0.9) 0%, transparent 80%),
+                radial-gradient(ellipse 180% 120% at 30% 0%, rgba(0, 229, 255, 0.8) 0%, transparent 70%),
+                radial-gradient(ellipse 150% 100% at 70% 0%, rgba(0, 229, 255, 0.7) 0%, transparent 60%),
+                radial-gradient(ellipse 120% 80% at 20% 0%, rgba(0, 229, 255, 0.6) 0%, transparent 50%),
+                radial-gradient(ellipse 100% 70% at 80% 0%, rgba(0, 229, 255, 0.5) 0%, transparent 40%);
+            background-size: 450% 100%, 350% 100%, 280% 100%, 220% 100%, 180% 100%, 140% 100%;
+            background-position: 0% 0%, 0% 0%, 0% 0%, 0% 0%, 0% 0%, 0% 0%;
             animation: ultra-wave-flow 15s infinite linear;
-            opacity: 0.95;
+            opacity: 1;
             transform-origin: center top;
-            filter: blur(0.8px);
+            filter: blur(0.5px);
         }
 
         .water-surface::before {
@@ -1162,8 +1128,6 @@
         <div class="depth-value" id="depthValue">0m</div>
     </div>
 
-    <!-- Water Particles -->
-    <div class="water-particles" id="waterParticles"></div>
     <div class="light-ray"></div>
 
     <!-- Header Section - Surface with Advanced Sky -->
@@ -1919,7 +1883,6 @@
         // Initialize everything when DOM loads
         document.addEventListener('DOMContentLoaded', () => {
             createAdvancedSkyEffects();
-            createParticles('waterParticles', 80, 2, 12, 8, 25);
             createParticles('deepWaterEffects', 40, 3, 18, 12, 35);
             createParticles('midWaterEffects', 30, 2, 15, 10, 20);
             createSeabed();
@@ -1940,13 +1903,11 @@
                 updateSky();
                 
                 // Recreate water effects
-                document.getElementById('waterParticles').innerHTML = '';
                 document.getElementById('deepWaterEffects').innerHTML = '';
                 document.getElementById('midWaterEffects').innerHTML = '';
                 document.querySelector('.abyss-effects').innerHTML = '';
                 document.getElementById('waterRipples').innerHTML = '';
                 
-                createParticles('waterParticles', 80, 2, 12, 8, 25);
                 createParticles('deepWaterEffects', 40, 3, 18, 12, 35);
                 createParticles('midWaterEffects', 30, 2, 15, 10, 20);
                 createSeabed();
